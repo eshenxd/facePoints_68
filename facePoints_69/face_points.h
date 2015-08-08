@@ -13,6 +13,8 @@ public:
 		this->modelName = modelName;
 		this->cascadeName = cascadeName;
 
+		imageSavepath = "../save/";
+		saveCount = 0;
 
 		faces = new std::vector < cv::Rect > ;
 
@@ -53,6 +55,8 @@ private:
 	int _pos[4];
 	std::string modelName;
 	std::string cascadeName;
+	std::string imageSavepath;
+	int saveCount;
 
 	std::vector<cv::Rect> *faces;
 
@@ -63,6 +67,7 @@ private:
 	cv::Mat_<double> current_shape;   /*< curret_shape是一个多行两列的矩阵,用来存放检测到的关键点*/
 	std::vector<cv::Mat_<double>>shapes;
 
+	std::string _int2string(int x);
 
 	void ReadGlobalParamFromFile(std::string );
 	void InitializeGlobalParam();

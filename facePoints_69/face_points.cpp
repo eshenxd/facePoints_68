@@ -72,6 +72,7 @@ void KeyPoints::initParam()
 void KeyPoints::runKeypointsDetection(Mat inputImage)
 {
 	detectFace(inputImage);
+	points.clear();
 	for (vector<Mat_<double>>::iterator iter = shapes.begin(); iter != shapes.end(); ++iter)
 	{
 		for (int i = 0; i < global_params.landmark_num; i++)
@@ -85,14 +86,44 @@ void KeyPoints::runKeypointsDetection(Mat inputImage)
 	}
 	
 #ifdef DEBUG
-	for (unsigned int ix = 0; ix < points.size(); ix++)
+	/*for (unsigned int ix = 0; ix < points.size(); ix++)
 	{
-		circle(inputImage, Point2d(points[ix].x,points[ix].y), 3, Scalar(255, 255, 255), -1, 8, 0);
-	}
-	imshow("show", inputImage);
-	cvWaitKey(0);
-#endif // DEBUG
+	circle(inputImage, Point2d(points[ix].x,points[ix].y), 3, Scalar(255, 255, 255), -1, 8, 0);
+	}*/
+	/*line(inputImage, Point2d(points[17].x, points[17].y), Point2d(points[26].x, points[26].y),
+		Scalar(255, 0, 0), 2, 8, 0);
+	line(inputImage, Point2d(points[27].x, points[27].y), Point2d(points[30].x, points[30].y), Scalar(255, 0, 0), 2, 8, 0);*/
+	if (points.size() == 68){
 
+		Point2d p1, p2, p3, p4;
+
+		int gap = (points[27].x - points[17].x) / 2;
+
+		p1.x = points[17].x;
+		p1.y = points[36].y - gap;
+		p2.x = points[27].x;
+		p2.y = points[36].y - gap;
+		p3.x = p1.x;
+		p3.y = points[36].y + gap;
+		p4.x = p2.x;
+		p4.y = points[36].y + gap;
+
+		//line(inputImage, p1, p2, Scalar(255, 0, 0), 1, 8, 0);
+		//line(inputImage, p4, p2, Scalar(255, 0, 0), 1, 8, 0);
+		//line(inputImage, p1, p3, Scalar(255, 0, 0), 1, 8, 0);
+		//line(inputImage, p3, p4, Scalar(255, 0, 0), 1, 8, 0);
+
+		Mat ROI(inputImage, Rect(p1.x, p1.y, gap * 2, gap * 2));
+		saveCount++;
+
+		string saveImageName = imageSavepath + _int2string(saveCount) + ".jpg";
+
+		imwrite(saveImageName, ROI);
+
+
+	}
+	
+#endif // DEBUG
 	
 
 }
@@ -131,13 +162,13 @@ void KeyPoints::detectFace(cv::Mat image)
 	
 
 	cascade->detectMultiScale(smallImg, *faces,
-		1.1, 4, 0
+		1.2, 4, 0
 		//|CV_HAAR_FIND_BIGGEST_OBJECT
 		//|CV_HAAR_DO_ROUGH_SEARCH
 		| CV_HAAR_SCALE_IMAGE
 		,
 		Size(20, 20));
-
+	shapes.clear();
 
 	for (vector<Rect>::const_iterator r = faces->begin(); r != faces->end(); r++, i++){
 		Point center;
@@ -160,6 +191,14 @@ void KeyPoints::detectFace(cv::Mat image)
 	
 }
 
+string KeyPoints::_int2string(int x)
+{
+	string tmp_s;
+	char tmp_c[10];
+	_itoa_s(x,tmp_c,10);
+	tmp_s = (string)tmp_c;
+	return tmp_s;
+}
 
 
 

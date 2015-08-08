@@ -14,6 +14,8 @@
 
 #include "header.h"
 #include "face_points.h"
+#include "video_camera.h"
+#include "getFiles.h"
 
 using namespace std;
 using namespace cv;
@@ -24,12 +26,24 @@ int main()
 	string paramName = "../model/LBF.model";
 	
 	KeyPoints keypointor(modelPath, cascadeName);
+	
 
-	Mat inputImage = imread("1.jpg");
+	Mat inputImage;
 
-	keypointor.runKeypointsDetection(inputImage);
+	string filePath = "../image";
+	vector<string>filename;
+	getFiles(filePath, filename);
+	for (vector<string>::iterator iter = filename.begin(); iter != filename.end(); iter++)
+	{
+		inputImage = imread(*iter);
+		keypointor.runKeypointsDetection(inputImage);
+	}
 
-	vector<CvPoint>points = keypointor.getFaceKeypoints();
+	/*inputImage = imread("01.jpg");
+
+	keypointor.runKeypointsDetection(inputImage);*/
+
+	
 
 	return 0;
 }
