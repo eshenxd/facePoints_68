@@ -85,45 +85,45 @@ void KeyPoints::runKeypointsDetection(Mat inputImage)
 		
 	}
 	
-#ifdef DEBUG
-	/*for (unsigned int ix = 0; ix < points.size(); ix++)
-	{
-	circle(inputImage, Point2d(points[ix].x,points[ix].y), 3, Scalar(255, 255, 255), -1, 8, 0);
-	}*/
-	/*line(inputImage, Point2d(points[17].x, points[17].y), Point2d(points[26].x, points[26].y),
-		Scalar(255, 0, 0), 2, 8, 0);
-	line(inputImage, Point2d(points[27].x, points[27].y), Point2d(points[30].x, points[30].y), Scalar(255, 0, 0), 2, 8, 0);*/
-	if (points.size() == 68){
-
-		Point2d p1, p2, p3, p4;
-
-		int gap = (points[27].x - points[17].x) / 2;
-
-		p1.x = points[17].x;
-		p1.y = points[36].y - gap;
-		p2.x = points[27].x;
-		p2.y = points[36].y - gap;
-		p3.x = p1.x;
-		p3.y = points[36].y + gap;
-		p4.x = p2.x;
-		p4.y = points[36].y + gap;
-
-		//line(inputImage, p1, p2, Scalar(255, 0, 0), 1, 8, 0);
-		//line(inputImage, p4, p2, Scalar(255, 0, 0), 1, 8, 0);
-		//line(inputImage, p1, p3, Scalar(255, 0, 0), 1, 8, 0);
-		//line(inputImage, p3, p4, Scalar(255, 0, 0), 1, 8, 0);
-
-		Mat ROI(inputImage, Rect(p1.x, p1.y, gap * 2, gap * 2));
-		saveCount++;
-
-		string saveImageName = imageSavepath + _int2string(saveCount) + ".jpg";
-
-		imwrite(saveImageName, ROI);
-
-
-	}
-	
-#endif // DEBUG
+//#ifdef DEBUG
+//	/*for (unsigned int ix = 0; ix < points.size(); ix++)
+//	{
+//	circle(inputImage, Point2d(points[ix].x,points[ix].y), 3, Scalar(255, 255, 255), -1, 8, 0);
+//	}*/
+//	/*line(inputImage, Point2d(points[17].x, points[17].y), Point2d(points[26].x, points[26].y),
+//		Scalar(255, 0, 0), 2, 8, 0);
+//	line(inputImage, Point2d(points[27].x, points[27].y), Point2d(points[30].x, points[30].y), Scalar(255, 0, 0), 2, 8, 0);*/
+//	if (points.size() == 68){
+//
+//		Point2d p1, p2, p3, p4;
+//
+//		int gap = (points[27].x - points[17].x) / 2;
+//
+//		p1.x = points[17].x;
+//		p1.y = points[36].y - gap;
+//		p2.x = points[27].x;
+//		p2.y = points[36].y - gap;
+//		p3.x = p1.x;
+//		p3.y = points[36].y + gap;
+//		p4.x = p2.x;
+//		p4.y = points[36].y + gap;
+//
+//		//line(inputImage, p1, p2, Scalar(255, 0, 0), 1, 8, 0);
+//		//line(inputImage, p4, p2, Scalar(255, 0, 0), 1, 8, 0);
+//		//line(inputImage, p1, p3, Scalar(255, 0, 0), 1, 8, 0);
+//		//line(inputImage, p3, p4, Scalar(255, 0, 0), 1, 8, 0);
+//
+//		Mat ROI(inputImage, Rect(p1.x, p1.y, gap * 2, gap * 2));
+//		saveCount++;
+//
+//		string saveImageName = imageSavepath + _int2string(saveCount) + ".jpg";
+//
+//		imwrite(saveImageName, ROI);
+//
+//
+//	}
+//	
+//#endif // DEBUG
 	
 
 }
