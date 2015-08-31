@@ -63,13 +63,15 @@ void FaceAlign::runFaceAlignment(Mat _inPutImage,vector<CvPoint>_KeyPoints)
 		float zoom = 3.0*width / 5.0/sqrtf(a);
 		//float zoom = sqrtf((eye_right.x - eye_left.x)*(eye_right.x - eye_left.x) + (eye_right.y - eye_left.y)*(eye_right.y - eye_left.y)) / width / 2;
 
-		int dst_width = _inPutImage.rows*zoom;
-		int dst_height = _inPutImage.cols*zoom;
+		int dst_width = _inPutImage.cols*zoom;
+		int dst_height = _inPutImage.rows*zoom;
 
 		Mat imgresize;
 		resize(rotaimage, imgresize, Size(dst_width, dst_height), 0, 0, CV_INTER_LINEAR);
 		
-		vector<CvPoint>reKeypoints;
+		
+
+ 		vector<CvPoint>reKeypoints;
 
 		CvPoint center = _KeyPoints[30];
 		
@@ -100,10 +102,27 @@ void FaceAlign::runFaceAlignment(Mat _inPutImage,vector<CvPoint>_KeyPoints)
 		Rect _rect;
 		_rect.x = src[2].x*zoom - width / 2;
 		_rect.y = src[2].y*zoom - height / 2;
-		_rect.width = width;
-		_rect.height = height;
+		if (_rect.x + width<imgresize.cols)_rect.width = width;
+		else
+		{
+			_rect.width = imgresize.cols - _rect.x;
+		}
 
+		if (_rect.y + height < imgresize.rows)_rect.height = height;
+		else
+		{
+			_rect.height = imgresize.rows - _rect.y;
+		}
+		
+		
+
+
+		/*rectangle(imgresize, _rect, Scalar(255, 255, 0));
+		imshow("test", imgresize);
+		waitKey(0);*/
+		
 		alignimg = imgresize(_rect);
+		
 
 		/*for (int ix = 0; ix < 68; ix++)
 		{
